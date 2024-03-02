@@ -1,0 +1,51 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if (!head || !head->next)
+            return true; // Empty or single node list is considered a palindrome
+        
+        // Step 1: Find the length of the linked list
+        int length = 0;
+        ListNode *curr = head;
+        while (curr) {
+            length++;
+            curr = curr->next;
+        }
+        
+        // Step 2: Reverse the second half of the linked list
+        int half = length / 2;
+        ListNode *prev = nullptr, *next = nullptr;
+        curr = head;
+        for (int i = 0; i < half; i++) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        
+        // Step 3: Compare the first half with the reversed second half
+        ListNode *firstHalfEnd = prev;
+        ListNode *secondHalfStart = curr;
+        if (length % 2 != 0) // If length is odd, move the second pointer one step ahead
+            secondHalfStart = secondHalfStart->next;
+        
+        while (firstHalfEnd && secondHalfStart) {
+            if (firstHalfEnd->val != secondHalfStart->val)
+                return false;
+            firstHalfEnd = firstHalfEnd->next;
+            secondHalfStart = secondHalfStart->next;
+        }
+        
+        return true;
+    }
+};
