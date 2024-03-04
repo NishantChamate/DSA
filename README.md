@@ -12,7 +12,7 @@ This repository serves as a resource for individuals interested in exploring sol
 
 The repository is organized into directories based on the problem's difficulty level (Easy, Medium, Hard). Inside each difficulty level directory, you'll find subdirectories named after the specific problem's title on LeetCode. Each problem directory contains:
 
-1. **Solution Files**: Objective-C files containing the code for solving the problem.
+1. **Solution Files**: Objective-C++ files containing the code for solving the problem.
 2. **README.md**: A readme file providing a description of the problem, constraints, and any additional information necessary for understanding the solution.
 
 ## Contributing
