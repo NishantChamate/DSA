@@ -1,0 +1,30 @@
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> anagramMap;
+        
+        // Iterate through each string in the input array
+        for (const string& str : strs) {
+            // Sort the characters in the string to use it as a key for the hashmap
+            string sortedStr = str;
+            sort(sortedStr.begin(), sortedStr.end());
+            // Add the string to the corresponding group in the hashmap
+            anagramMap[sortedStr].push_back(str);
+        }
+        
+        vector<vector<string>> result;
+        // Iterate through the hashmap and add the grouped anagrams to the result
+        for (auto it = anagramMap.begin(); it != anagramMap.end(); ++it) {
+            result.push_back(it->second);
+        }
+        
+        return result;
+    }
+};
