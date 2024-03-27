@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int minOperations(std::vector<int>& nums, int k) {
+        int operations = 0;
+        int min_element;
+        
+        while ((min_element = *std::min_element(nums.begin(), nums.end())) < k) {
+            nums.erase(std::find(nums.begin(), nums.end(), min_element));
+            operations++;
+        }
+        
+        return operations;
+    }
+};
