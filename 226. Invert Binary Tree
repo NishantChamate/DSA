@@ -9,21 +9,38 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
-public:
-    TreeNode* invertTree(TreeNode* root) {
-        if (root==NULL){
-            return NULL;
-        }
-        else{
-            TreeNode* const left= root->left;
-            TreeNode* const right= root->right;
+// class Solution {
+// public:
+//     TreeNode* invertTree(TreeNode* root) {
+//         if (root==NULL){
+//             return NULL;
+//         }
+//         else{
+//             TreeNode* const left= root->left;
+//             TreeNode* const right= root->right;
 
-            root->left=invertTree(right);
-            root->right=invertTree(left);
+//             root->left=invertTree(right);
+//             root->right=invertTree(left);
+
+//             return root;
+//         }
+        
+//     }
+// };
+
+class Solution{
+    public:
+        TreeNode* invertTree(TreeNode* root){
+            if (root== NULL) return NULL;
+
+            invertTree(root->left);
+            invertTree(root->right);
+
+            TreeNode* temp=root->left;
+            root->left=root->right;
+            root->right=temp;
 
             return root;
         }
-        
-    }
+
 };
