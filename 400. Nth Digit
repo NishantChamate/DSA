@@ -1,0 +1,31 @@
+pair<long long, long long> findRange(long long n, int digitLength, long long start) {
+    long long count = digitLength * 9 * start;
+    
+    if (n <= count) {
+        return {n, start};
+    } else {
+        return findRange(n - count, digitLength + 1, start * 10);
+    }
+}
+
+int findNthDigit(int n) {
+    // Initial call to the helper function
+    auto result = findRange(n, 1, 1);
+    n = result.first;
+    long long start = result.second;
+    int digitLength = log10(start) + 1;
+
+    // Determine the exact number and digit within the current range
+    int index = (n - 1) / digitLength;
+    int digitIndex = (n - 1) % digitLength;
+    long long number = start + index;
+    
+    string numberStr = to_string(number);
+    return numberStr[digitIndex] - '0';
+}
+
+int main() {
+    int n = 15;
+    cout << findNthDigit(n) << endl;  // Output: 2
+    return 0;
+}
