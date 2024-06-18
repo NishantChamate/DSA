@@ -1,0 +1,15 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        res=[]
+        dict = collections.Counter(nums)
+        for val, count in dict.items():
+            if len(res)<k:
+                heapq.heappush(res,(count,val))
+            else:
+                heapq.heappush(res,(count,val))
+                heapq.heappop(res)
+        return [val for count, val in res]
+
+
+//Methodology
+First we need count the appearence for each element store it in dictionary. Then we iterate the dictionary, and push the value-key pair (or count-value pair) into heap, if the the heap length less than k. When heap length is greater or equal than k, we push the current value-key pair into heap and pop one from the heap in order to keep the length of the heap equal to key. After iteration, we will get the k most frequent elements pair, we only need to return the value not the count.
