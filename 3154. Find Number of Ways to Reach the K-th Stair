@@ -1,0 +1,10 @@
+class Solution:
+  def waysToReachStair(self, k: int) -> int:
+    kMaxJump=29
+    ans=0
+    for jump in range(kMaxJump+1):
+      down = (1<<jump)-k
+      if down<0 or down>jump+1:
+        continue
+      ans+=math.comb(jump+1,down)
+    return ans
