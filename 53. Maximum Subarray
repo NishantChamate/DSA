@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int ans = INT_MIN; // Initialize ans to the smallest possible integer
+        int sum = 0;       // Initialize sum to 0
+        
+        for (const int num : nums) {
+            sum = max(num, sum + num); // Calculate the maximum subarray ending at current num
+            ans = max(ans, sum);       // Update ans with the maximum subarray sum found so far
+        }
+        
+        return ans; // Return the maximum subarray sum
+    }
+};
