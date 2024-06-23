@@ -10,3 +10,9 @@ public:
         return P;
     }
 };
+
+Sol2: Python-
+# Basic Sorting Solution
+def kClosest_sorting(points, k):
+    # Sort points by their squared Euclidean distance from the origin
+    return sorted(points, key=lambda point: point[0]**2 + point[1]**2)[:k]
