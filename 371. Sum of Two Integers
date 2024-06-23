@@ -1,0 +1,12 @@
+vector<int>dp(1001,-1);
+class Solution {
+public:
+    int getSum(int a, int b) {
+        // if(a==0 && b ==0) return 0;
+        // int sum=a+b;
+        // if (dp[sum]!=-1) return dp[sum];
+        // return dp[sum]= a+b;
+
+        return a+b;
+    }
+};
