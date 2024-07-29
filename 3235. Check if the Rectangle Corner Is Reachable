@@ -1,0 +1,65 @@
+class Solution {
+public:
+    bool path(int n, unordered_map<int , vector<int>>& mp, int src, int dst) {
+        vector<int> visited(n, 0); 
+        queue<int> q ; 
+        q.push(src) ;
+        visited[src] = 1 ;
+        while(!q.empty()) { 
+            int i = q.front() ; 
+            q.pop() ; 
+            if(i == dst)
+                return true;
+            for(int b : mp[i]){
+                if(!visited[b]){
+                    q.push(b) ;
+                    visited[b] = 1; 
+                }
+            }
+        }
+        return false; 
+    }
+    // left = n ; 
+    // right = n+2 ; 
+    // bottom = n+1 ; 
+    // top = n+3
+    void fn(int i ,int n , unordered_map<int , vector<int>>&mp , int x , int y , int r , int X , int Y){
+        if(y <= r){
+            mp[i].push_back(n+1) ;
+            mp[n+1].push_back(i) ; 
+        }
+        if(x <= r){
+            mp[i].push_back(n) ; 
+            mp[n].push_back(i) ;
+        }
+        if(abs(x-X) <= r){
+            mp[i].push_back(n+2) ; 
+            mp[n+2].push_back(i) ;
+        }
+        if(abs(y-Y) <= r){
+            mp[i].push_back(n+3) ;
+            mp[n+3].push_back(i) ;
+        }
+        return ;
+    }
+    bool canReachCorner(int X, int Y, vector<vector<int>>& circles) {
+        unordered_map<int , vector<int>> mp ; 
+        int n = circles.size() ;
+        for(int i = 0 ; i < n ; i++){
+            int fx = circles[i][0] ; 
+            int fy = circles[i][1] ; 
+            int fr = circles[i][2] ;
+            fn(i , n  ,mp , fx , fy , fr , X , Y) ;
+            for(int j = i+1 ; j < n ; j++){
+                int sx = circles[j][0] ; 
+                int sy = circles[j][1] ;
+                int sr = circles[j][2] ; 
+                if((double)pow(pow(fx-sx,2) + pow(fy-sy , 2) , 0.5) <= double(fr+sr)){
+                    mp[i].push_back(j) ; 
+                    mp[j].push_back(i) ;
+                }
+            }
+        }
+        return !(path(n+4 , mp , n , n+2) || path(n+4 , mp , n+1 , n+3) || path(n+4 , mp , n+2 , n+3) || path(n+4 , mp , n , n+1));
+    }
+};
