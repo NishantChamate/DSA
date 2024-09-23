@@ -1,32 +1,23 @@
 class Solution {
-public:
-    int solve(string& s, unordered_map<string, int>&mp, int index)
-    {
-        if (index >= s.size()) return 0;
-        
-        string currStr = "";
-        int minExtra = s.size();
-        for (int cutIdx = index; cutIdx < s.size(); cutIdx++)
-        {
-            currStr.push_back(s[cutIdx]);
-            //currStr will be a string from (index to cutIdx)
-            
-            //if string not in dictionary, we have to delete as they are extra chars
-            int currExtra = (mp.count(currStr))? 0 : currStr.size();
-            int nextExtra = solve(s, mp, cutIdx + 1);
-            int totalExtra = currExtra + nextExtra;
-            
-            minExtra = min(minExtra, totalExtra);
-        }
-        return minExtra;
-    }
-    int minExtraChar(string s, vector<string>& dictionary) 
-    {
-        unordered_map<string, int>mp;
-        for (string& word : dictionary) mp[word]++;
-        
-        int ans = solve(s, mp, 0);
-        return ans;
-        
-    }
+ public:
+  // Similar to 139. Word Break
+  int minExtraChar(string s, vector<string>& dictionary) {
+    const int n = s.length();
+    const unordered_set<string> dictionarySet{dictionary.begin(),
+                                              dictionary.end()};
+    // dp[i] := the minimum extra letters if breaking up s[0..i) optimally
+    vector<int> dp(n + 1, n);
+    dp[0] = 0;
+
+    for (int i = 1; i <= n; ++i)
+      for (int j = 0; j < i; ++j)
+        // s[j..i) is in `dictionarySet`.
+        if (dictionarySet.contains(s.substr(j, i - j)))
+          dp[i] = min(dp[i], dp[j]);
+        // s[j..i) are extra letters.
+        else
+          dp[i] = min(dp[i], dp[j] + i - j);
+
+    return dp[n];
+  }
 };
